@@ -47,15 +47,18 @@ defmodule Mix.Tasks.Nerves.Gen.Qemu do
     qemu-system-aarch64 \
       -machine #{machine} \
       -cpu #{cpu} \
-      -smp 1 \
-      -m 256M \
+      -smp 4 \
+      -m 2G \
       -kernel #{bootloader} \
       -netdev user,id=eth0,hostfwd=tcp:127.0.0.1:10022-:22 \
       -device virtio-net-device,netdev=eth0,mac=fe:db:ed:de:d0:01 \
       -global virtio-mmio.force-legacy=false \
       -drive if=none,file=#{disk},format=raw,id=vdisk \
-      -device virtio-blk-device,drive=vdisk,bus=virtio-mmio-bus.0 \
-      -nographic
+    -device virtio-blk-device,drive=vdisk,bus=virtio-mmio-bus.0 \
+    -device virtio-gpu-gl-pci,xres=1280,yres=720 \
+    -device virtio-keyboard-pci \
+    -device virtio-tablet-pci \
+    -display gtk,gl=on
     """
   end
 
@@ -69,7 +72,7 @@ defmodule Mix.Tasks.Nerves.Gen.Qemu do
           Mix.shell().info("Detected KVM support.")
           {"virt,accel=kvm", "host"}
         else
-          {"virt", "cortex-a53"}
+          {"virt", "cortex-a76"}
         end
 
       {:aarch64, :macos} ->
@@ -77,7 +80,7 @@ defmodule Mix.Tasks.Nerves.Gen.Qemu do
         {"virt,accel=hvf", "host"}
 
       _ ->
-        {"virt", "cortex-a53"}
+        {"virt", "cortex-a76"}
     end
   end
 
