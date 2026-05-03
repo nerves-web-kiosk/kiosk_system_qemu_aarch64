@@ -8,6 +8,8 @@ defmodule Mix.Tasks.Nerves.Gen.Qemu do
 
   use Mix.Task
 
+  alias KioskSystemQemuAarch64.Qemu
+
   @impl Mix.Task
   def run(args) do
     fw_path =
@@ -27,84 +29,9 @@ defmodule Mix.Tasks.Nerves.Gen.Qemu do
       end
 
     disk_path = "virtual-disk.img"
-    File.rm(disk_path)
+    Qemu.create_disk_image(fw_path, disk_path)
 
-    Mix.shell().info("Creating disk image '#{disk_path}' from '#{fw_path}'...")
-
-    {_, 0} =
-      System.cmd("fwup", ["-a", "-i", fw_path, "-d", disk_path, "-t", "complete"],
-        into: IO.stream()
-      )
-
-    {machine, cpu} = get_machine_and_cpu()
-    bootloader = Path.join(System.fetch_env!("NERVES_SDK_IMAGES"), "little_loader.elf")
-    cmd = template_command(machine, cpu, bootloader, disk_path)
+    cmd = Qemu.command_line(Qemu.bootloader_path(), disk_path)
     Mix.shell().info("Command:\n#{cmd}")
-  end
-
-  defp template_command(machine, cpu, bootloader, disk) do
-    """
-    qemu-system-aarch64 \
-      -machine #{machine} \
-      -cpu #{cpu} \
-      -smp 4 \
-      -m 2G \
-      -kernel #{bootloader} \
-      -netdev user,id=eth0,hostfwd=tcp:127.0.0.1:10022-:22 \
-      -device virtio-net-device,netdev=eth0,mac=fe:db:ed:de:d0:01 \
-      -global virtio-mmio.force-legacy=false \
-      -drive if=none,file=#{disk},format=raw,id=vdisk \
-    -device virtio-blk-device,drive=vdisk,bus=virtio-mmio-bus.0 \
-    -device virtio-gpu-gl-pci,xres=1280,yres=720 \
-    -device virtio-keyboard-pci \
-    -device virtio-tablet-pci \
-    -display gtk,gl=on
-    """
-  end
-
-  defp get_machine_and_cpu() do
-    {a, o} = type = {arch(), os()}
-    Mix.shell().info("Generating command line for arch '#{a}' on host OS '#{o}'.")
-
-    case type do
-      {:aarch64, :linux} ->
-        if System.find_executable("kvm") != nil do
-          Mix.shell().info("Detected KVM support.")
-          {"virt,accel=kvm", "host"}
-        else
-          {"virt", "cortex-a76"}
-        end
-
-      {:aarch64, :macos} ->
-        Mix.shell().info("Apple Silicon on MacOS, using HVF.")
-        {"virt,accel=hvf", "host"}
-
-      _ ->
-        {"virt", "cortex-a76"}
-    end
-  end
-
-  defp arch() do
-    case to_string(:erlang.system_info(:system_architecture)) do
-      "aarch64-" <> _ ->
-        :aarch64
-
-      a ->
-        Mix.shell().info("Got arch #{a}, using 'other'.")
-        :other
-    end
-  end
-
-  defp os() do
-    case :os.type() do
-      {:unix, :linux} ->
-        :linux
-
-      {:unix, :darwin} ->
-        :macos
-
-      _ ->
-        :other
-    end
   end
 end
