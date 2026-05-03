@@ -30,3 +30,9 @@ Apple Silicon and can use HVF acceleration it will provide those. Otherwise it
 falls back to full emulation.
 
 The guest Nerves device can be accessed via the console or by SSH via port 10022.
+
+To upload firmware, run:
+
+```sh
+mix upload localhost --port 10022
+```
