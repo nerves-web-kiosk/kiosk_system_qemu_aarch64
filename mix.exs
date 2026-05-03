@@ -1,7 +1,7 @@
 defmodule KioskSystemQemuAarch64.MixProject do
   use Mix.Project
 
-  @github_organization "nerves-project"
+  @github_organization "nerves-web-kiosk"
   @app :kiosk_system_qemu_aarch64
   @source_url "https://github.com/#{@github_organization}/#{@app}"
   @version Path.join(__DIR__, "VERSION")
@@ -91,7 +91,7 @@ defmodule KioskSystemQemuAarch64.MixProject do
       links: %{
         "GitHub" => @source_url,
         "REUSE Compliance" =>
-          "https://api.reuse.software/info/github.com/nerves-project/kiosk_system_qemu_aarch64"
+          "https://api.reuse.software/info/github.com/nerves-web-kiosk/kiosk_system_qemu_aarch64"
       }
     ]
   end
