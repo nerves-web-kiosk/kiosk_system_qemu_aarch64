@@ -28,7 +28,7 @@ defmodule KioskSystemQemuAarch64.Qemu do
       "-smp", "4",
       "-m", "2G",
       "-kernel", bootloader,
-      "-netdev", "user,id=eth0,hostfwd=tcp:127.0.0.1:10022-:22",
+      "-netdev", "user,id=eth0,hostfwd=tcp:127.0.0.1:10022-:22,hostfwd=tcp:127.0.0.1:14000-:4000,hostfwd=tcp:127.0.0.1:19222-:9222",
       "-device", "virtio-net-device,netdev=eth0,mac=fe:db:ed:de:d0:01",
       "-global", "virtio-mmio.force-legacy=false",
       "-drive", "if=none,file=#{disk_path},format=raw,id=vdisk",
@@ -36,7 +36,7 @@ defmodule KioskSystemQemuAarch64.Qemu do
       "-device", "virtio-gpu-gl-pci,edid=on,xres=1280,yres=720",
       "-device", "virtio-keyboard-pci",
       "-device", "virtio-tablet-pci",
-      "-display", "gtk,gl=on"
+      "-display", "gtk,gl=on,zoom-to-fit=off"
     ]
   end
 
