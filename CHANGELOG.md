@@ -12,7 +12,7 @@ This is a major update with security and feature updates throughout.
   * [nerves_system_br v1.34.0 release notes](https://github.com/nerves-project/nerves_system_br/releases/tag/v1.34.0)
   * GCC 15.3.0
   * [Erlang/OTP 29.0.2](https://erlang.org/download/OTP-29.0.2.README.md)
-  * linux 6.18.33 (Raspberry Pi 1.20260521 tag)
+  * linux 6.18.34
   * [Buildroot 2026.05](https://lore.kernel.org/buildroot/87fr2wpxhj.fsf@dell.be.48ers.dk/T/)
 
 ## v0.1.2
