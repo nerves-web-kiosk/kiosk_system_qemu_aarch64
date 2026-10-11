@@ -1,5 +1,9 @@
 # Web kiosk system for QEMU/aarch64
 
+[![Hex version](https://img.shields.io/hexpm/v/kiosk_system_qemu_aarch64.svg "Hex version")](https://hex.pm/packages/kiosk_system_qemu_aarch64)
+[![CI](https://github.com/nerves-web-kiosk/kiosk_system_qemu_aarch64/actions/workflows/ci.yml/badge.svg)](https://github.com/nerves-web-kiosk/kiosk_system_qemu_aarch64/actions/workflows/ci.yml)
+[![REUSE status](https://api.reuse.software/badge/github.com/nerves-web-kiosk/kiosk_system_qemu_aarch64)](https://api.reuse.software/info/github.com/nerves-web-kiosk/kiosk_system_qemu_aarch64)
+
 This is the Nerves base system for the [Qemu ARM system emulator](https://www.qemu.org/docs/master/system/target-arm.html). It is focused on ARM64 and intended to be used with [Little Loader](https://github.com/fhunleth/little_loader).
 
 | Feature        | Description                                                 |
