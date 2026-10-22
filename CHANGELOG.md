@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.1
+
+This is a security and bug fix release.
+
+* Package updates
+  * [nerves_system_br 1.35.3](https://github.com/nerves-project/nerves_system_br/releases/tag/v1.35.3)
+  * [Buildroot 2026.08.1](https://lore.kernel.org/buildroot/buildroot-2026.08.1-announce-1792682049@buildroot.org/T/)
+
 ## v0.3.0
 
 This is a major Buildroot update with security and feature updates throughout.
