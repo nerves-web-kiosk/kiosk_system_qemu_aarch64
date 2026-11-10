@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.2
+
+* Changes
+  * Use Nerves 2 to create official system artifacts. Generated artifacts work
+    on both Nerves 1 and Nerves 2 like in the previous release.
+  * Publish SHA256 checksums (checksum.exs) to Hex.pm
+  * Remove hardcoded BR2_CCACHE since it's build-time configurable now
+
 ## v0.3.1
 
 This is a security and bug fix release.
